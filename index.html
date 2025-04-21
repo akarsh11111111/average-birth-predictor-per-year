@@ -5,103 +5,153 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BIRTH RATE PREDICTOR </title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            font-size: 40px;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            animation: gradientBG 10s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            color: #6a0dad;
+            text-align: center;
+            background: linear-gradient(45deg, #000000, #333333);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .box {
+            background: rgba(84, 247, 138, 0.9);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        #locality {
+            text-align: center;
+            border-radius: 10px;
+            padding: 5px;
+            border: 2px solid #4CAF50;
+            background: #fff;
+            font-weight: bold;
+            transition: border-color 0.3s ease;
+        }
+
+        #locality:hover {
+            border-color: #45a049;
+        }
+
+        #year {
+            border-radius: 10px;
+            padding: 5px;
+            border: 2px solid #4CAF50;
+            background: #fff;
+            transition: border-color 0.3s ease;
+        }
+
+        #year:hover {
+            border-color: #45a049;
+        }
+
+        #predict {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            cursor: pointer;
+            border-radius: 10px;
+            padding: 10px 20px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        #predict:hover {
+            background: linear-gradient(45deg, #45a049, #388e3c);
+            transform: translateY(-2px);
+        }
+
+        #reset {
+            border-radius: 10px;
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+            cursor: pointer;
+            padding: 10px 20px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        #reset:hover {
+            background: linear-gradient(45deg, #d32f2f, #b71c1c);
+            transform: translateY(-2px);
+        }
+
+        .button {
+            margin-top: 50px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #output {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5d4037;
+            font-style: italic;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media only screen and (max-width: 651px) {
+            * {
+                font-size: 20px;
+            }
+            .button {
+                margin-top: 30px;
+            }
+        }
+
+        @media only screen and (max-width: 352px) {
+            * {
+                font-size: 10px;
+            }
+            .button {
+                margin-top: 10px;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
 </head>
-<style>
-    * {
-        font-size: 40px;
-    }
-
-    body {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgb(247, 176, 84);
-    }
-
-    h1 {
-        color: slateblue;
-        text-align: center;
-        background-color: rgb(0, 0, 0);
-    }
-
-
-    .box {
-        background-color: rgb(84, 247, 138);
-        /* border-radius: 50px; */
-        padding: 0px 10px 10px 10px;
-        box-shadow: 0px 0px 10px 10px #8f8f8f;
-    }
-
-    #locality {
-        text-align: center;
-        border-radius: 10px;
-    }
-
-    #year {
-        border-radius: 10px;
-    }
-
-    #predict {
-        background-color: green;
-        cursor: pointer;
-        border-radius: 10px;
-    }
-
-    #predict:hover {
-        background-color: darkgreen;
-    }
-
-    #reset {
-        border-radius: 10px;
-        background-color: red;
-        cursor: pointer;
-    }
-
-    #reset:hover {
-        background-color: darkred;
-
-    }
-
-    .button {
-        margin-top: 50px;
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-    }
-
-    #output {
-        display: flex;
-        /* color: brown; */
-        align-items: center;
-        justify-content: center;
-    }
-
-    @media only screen and (max-width: 651px) {
-        * {
-            font-size: 20px;
-        }
-
-        .button {
-            margin-top: 30px;
-        }
-    }
-
-    @media only screen and (max-width: 352px) {
-        * {
-            font-size: 10px;
-        }
-
-        .button {
-            margin-top: 10px;
-            margin-bottom: 5px;
-        }
-    }
-</style>
 
 <body>
     <div class="box">
@@ -116,7 +166,6 @@
                 <option value="1">Mumbai</option>
                 <option value="2">Delhi</option>
                 <option value="3">India</option>
-
             </select>
         </div>
         <div>
@@ -129,62 +178,53 @@
             <button id="reset">Reset</button>
         </div>
         <div id="output"></div>
-        <script src="script.js"></script>
-    </div>
-    <script>
-        function run() {
-            let locality = document.getElementById("locality").value;
-            let year = document.getElementById("year").value;
-            if (locality == 0) {
-
-                document.getElementById("output").innerText = "Please select locality!"
-                document.getElementById("output").style.color = "red"
-            }
-            else if (year == "" || Number(year) < 1900) {
-                if (year == "") {
-
-                    document.getElementById("output").innerText = "Please enter year!";
-                    document.getElementById("output").style.color = "red";
+        <script>
+            function run() {
+                let locality = document.getElementById("locality").value;
+                let year = document.getElementById("year").value;
+                if (locality == 0) {
+                    document.getElementById("output").innerText = "Please select locality!"
+                    document.getElementById("output").style.color = "red"
+                }
+                else if (year == "" || Number(year) < 1900) {
+                    if (year == "") {
+                        document.getElementById("output").innerText = "Please enter year!";
+                        document.getElementById("output").style.color = "red";
+                    }
+                    else {
+                        document.getElementById("output").innerText = "Please enter year greater than 1900!";
+                        document.getElementById("output").style.color = "red"
+                    }
                 }
                 else {
-                    document.getElementById("output").innerText = "Please enter year greater than 1900!";
-                    document.getElementById("output").style.color = "red"
-
+                    document.getElementById("output").style.color = "brown"
+                    if (locality == 1) {
+                        let output = Math.round(-4564 * year + 9.355e+006);
+                        document.getElementById("output").innerText = `Predicted Average Birth Rate per year: ${output}`;
+                    }
+                    else if (locality == 2) {
+                        let output = Math.round(15639 * year - 3.133e+007);
+                        document.getElementById("output").innerText = `Predicted Average Birth Rate per year: ${output}`;
+                    }
+                    else if (locality == 3) {
+                        let output = Math.round(0.7771 * year - 1548);
+                        document.getElementById("output").innerText = `Predicted Average Birth Rate per year: ${output} Million`;
+                    }
                 }
             }
-            else {
-                document.getElementById("output").style.color = "brown"
-                if (locality == 1) {
-                    let output = Math.round(-4564 * year + 9.355e+006);
-                    document.getElementById("output").innerText = `Predicted Average Birth Rate per year: ${output}`;
-                }
-                else if (locality == 2) {
-                    let output = Math.round(15639 * year - 3.133e+007);
-                    document.getElementById("output").innerText = `Predicted Average Birth Rate per year: ${output}`;
-
-                }
-                else if (locality == 3) {
-
-                    let output = Math.round(0.7771 * year - 1548);
-                    document.getElementById("output").innerText = `Predicted Average Birth Rate per year: ${output} Million`;
-                }
-
-            }
-
-        }
-        document.getElementById("predict").addEventListener("click", () => {
-            run();
-        })
-        document.addEventListener("keydown", (event) => {
-            if (event.key == "Enter") {
+            document.getElementById("predict").addEventListener("click", () => {
                 run();
-            }
-        })
-        document.getElementById("reset").addEventListener("click", () => {
-            window.location.reload();
-        })
-
-    </script>
+            })
+            document.addEventListener("keydown", (event) => {
+                if (event.key == "Enter") {
+                    run();
+                }
+            })
+            document.getElementById("reset").addEventListener("click", () => {
+                window.location.reload();
+            })
+        </script>
+    </div>
 </body>
 
 </html>
