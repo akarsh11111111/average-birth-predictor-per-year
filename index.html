@@ -8,6 +8,8 @@
     <style>
         * {
             font-size: 40px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
         }
 
         body {
@@ -16,8 +18,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            background: linear-gradient(135deg, #ff7e5f, #feb47b, #ffcc80);
             animation: gradientBG 10s ease infinite;
+            overflow: hidden;
         }
 
         @keyframes gradientBG {
@@ -32,80 +35,122 @@
             background: linear-gradient(45deg, #000000, #333333);
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
         }
 
         .box {
-            background: rgba(84, 247, 138, 0.9);
+            background: rgba(84, 247, 138, 0.95);
             border-radius: 20px;
             padding: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(5px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(76, 175, 80, 0.5);
+            transform: perspective(1000px) rotateY(5deg);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
         }
 
         .box:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            transform: perspective(1000px) rotateY(0deg) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 0, 0, 0.3);
         }
 
-        #locality {
+        #locality, #year {
             text-align: center;
             border-radius: 10px;
-            padding: 5px;
+            padding: 10px;
             border: 2px solid #4CAF50;
-            background: #fff;
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
             font-weight: bold;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
         }
 
-        #locality:hover {
+        #locality:hover, #year:hover {
             border-color: #45a049;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
         }
 
-        #year {
-            border-radius: 10px;
-            padding: 5px;
-            border: 2px solid #4CAF50;
-            background: #fff;
-            transition: border-color 0.3s ease;
-        }
-
-        #year:hover {
-            border-color: #45a049;
+        #locality:focus, #year:focus {
+            border-color: #388e3c;
+            box-shadow: 0 0 15px rgba(56, 142, 60, 0.7);
         }
 
         #predict {
             background: linear-gradient(45deg, #4CAF50, #45a049);
             cursor: pointer;
             border-radius: 10px;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
             color: white;
             font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.4s ease, transform 0.2s ease;
+        }
+
+        #predict::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        #predict:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         #predict:hover {
             background: linear-gradient(45deg, #45a049, #388e3c);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
         #reset {
             border-radius: 10px;
             background: linear-gradient(45deg, #f44336, #d32f2f);
             cursor: pointer;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
             color: white;
             font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.4s ease, transform 0.2s ease;
+        }
+
+        #reset::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        #reset:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         #reset:hover {
             background: linear-gradient(45deg, #d32f2f, #b71c1c);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
         .button {
@@ -114,7 +159,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 30px;
+            perspective: 1000px;
         }
 
         #output {
@@ -123,13 +169,22 @@
             justify-content: center;
             color: #5d4037;
             font-style: italic;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1s ease-in;
+            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 1s ease-in, bounce 1.5s infinite;
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 245, 238, 0.8);
+            border-radius: 10px;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         @media only screen and (max-width: 651px) {
@@ -138,6 +193,10 @@
             }
             .button {
                 margin-top: 30px;
+                gap: 15px;
+            }
+            #predict, #reset {
+                padding: 8px 15px;
             }
         }
 
@@ -148,6 +207,10 @@
             .button {
                 margin-top: 10px;
                 margin-bottom: 5px;
+                gap: 10px;
+            }
+            #predict, #reset {
+                padding: 5px 10px;
             }
         }
     </style>
